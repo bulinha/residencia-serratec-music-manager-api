@@ -1,4 +1,4 @@
-package br.org.serratec.iot;
+package br.org.serratec.mm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
