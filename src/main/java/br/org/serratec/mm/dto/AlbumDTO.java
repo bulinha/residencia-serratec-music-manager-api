@@ -21,7 +21,7 @@ public class AlbumDTO {
 		this.titulo = album.getTitulo();
 		this.idArtista = album.getArtista().getId();
 		this.nomeArtista = album.getArtista().getNome();
-		this.musicas = album.getMusicas().stream().map(m -> new MusicaAlbumDTO(m, this.idArtista, this.nomeArtista).collect(Collectors.toList());
+		this.musicas = album.getMusicas().stream().map(m -> new MusicaAlbumDTO(m, this.idArtista, this.nomeArtista)).collect(Collectors.toList());
 	}
 	public Long getId() {
 		return id;
@@ -47,10 +47,10 @@ public class AlbumDTO {
 	public void setNomeArtista(String nomeArtista) {
 		this.nomeArtista = nomeArtista;
 	}
-	public List<MusicaDTO> getMusicas() {
+	public List<MusicaAlbumDTO> getMusicas() {
 		return musicas;
 	}
-	public void setMusicas(List<MusicaDTO> musicas) {
+	public void setMusicas(List<MusicaAlbumDTO> musicas) {
 		this.musicas = musicas;
 	}
 	@Override
