@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		String[] paths = { "/api/musica/**", "/api/album/**", "/api/artista/**" };
+		String[] paths = { "/api/musica/**", "/api/album/**", "/api/artista/**" , "/" };
 		String pathPlaylist = "/api/playlist/**";
 
 		http
@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		;
 
 		http.authorizeRequests()
+			.antMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
 			.antMatchers(HttpMethod.GET, paths).permitAll()
 			.antMatchers(HttpMethod.POST, paths).hasAuthority("ROLE_ADMIN")
 			.antMatchers(HttpMethod.PUT, paths).hasAuthority("ROLE_ADMIN")
