@@ -15,7 +15,5 @@ public interface PlayListRepository extends JpaRepository<PlayList, Long>{
 	@Query("from PlayList p where p.usuario=:usuario")
 	public List<PlayList> findAllList(@Param("usuario") Usuario usuario);
 	
-	@Query("Select p from Playlist p where p.ativa=true")
-	public List<PlayList> findAllAtiva();
-
+	
 }
