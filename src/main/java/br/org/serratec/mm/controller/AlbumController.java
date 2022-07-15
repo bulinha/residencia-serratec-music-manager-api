@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +58,8 @@ public class AlbumController {
 		MimeType mimeType = MimeType.valueOf(capa.getMimetype());
 		headers.add(HttpHeaders.CONTENT_DISPOSITION,
                 "inline; filename="+album.getTitulo()+"."+mimeType.getSubtype());
+		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+
 		return new ResponseEntity<>(capa.getData(), headers, HttpStatus.OK);
 	}
 	
