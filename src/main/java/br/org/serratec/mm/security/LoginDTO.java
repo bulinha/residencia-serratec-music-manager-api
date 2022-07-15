@@ -1,5 +1,6 @@
 package br.org.serratec.mm.security;
 
+
 public class LoginDTO {
 	private String user;
 	private String password;

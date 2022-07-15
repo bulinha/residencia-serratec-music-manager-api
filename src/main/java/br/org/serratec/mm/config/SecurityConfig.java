@@ -58,10 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.PUT, paths).hasAuthority("ROLE_ADMIN")
 			.antMatchers(HttpMethod.DELETE, paths).hasAuthority("ROLE_ADMIN")
 
-			.antMatchers(HttpMethod.POST, pathPlaylist).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-			.antMatchers(HttpMethod.PUT, pathPlaylist).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-			.antMatchers(HttpMethod.DELETE, pathPlaylist).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-			.antMatchers(HttpMethod.GET, pathPlaylist).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 			
 			.antMatchers(HttpMethod.POST, "/api/playlist").hasAuthority("ROLE_USER")
 			.antMatchers(HttpMethod.PUT, "/api/playlist").hasAuthority("ROLE_USER")

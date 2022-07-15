@@ -12,7 +12,7 @@ public class AlbumDTO {
 	private String titulo;
 	private Long idArtista;
 	private String nomeArtista;
-	private List<MusicaDTO> musicas;
+	private List<MusicaAlbumDTO> musicas;
 	public AlbumDTO() {
 		super();
 	}
@@ -21,7 +21,7 @@ public class AlbumDTO {
 		this.titulo = album.getTitulo();
 		this.idArtista = album.getArtista().getId();
 		this.nomeArtista = album.getArtista().getNome();
-		this.musicas = album.getMusicas().stream().map(MusicaDTO::new).collect(Collectors.toList());
+		this.musicas = album.getMusicas().stream().map(m -> new MusicaAlbumDTO(m, this.idArtista, this.nomeArtista).collect(Collectors.toList());
 	}
 	public Long getId() {
 		return id;
