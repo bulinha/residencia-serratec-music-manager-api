@@ -52,6 +52,9 @@ public class AlbumController {
 	public ResponseEntity<byte[]> getCapa(@PathVariable Long id) throws DataNotFoundException{
 		AlbumDTO album = albumService.findById(id);
 		Capa capa = albumService.getCapa(id);
+		if (capa==null) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("content-type", capa.getMimetype());
 		headers.add("content-length", String.valueOf(capa.getData().length));
@@ -66,7 +69,7 @@ public class AlbumController {
 	
 	@SecurityRequirement(name = "Bearer Authentication")
 	@PostMapping
-	public ResponseEntity<AlbumDTO> insertAlbum(@RequestParam("file") MultipartFile file, @Valid @RequestPart("album") AlbumDTO album) {
+	public ResponseEntity<AlbumDTO> insertAlbum(@RequestParam("file") MultipartFile file, @Valid @RequestPart("album") AlbumDTO album) throws DataNotFoundException {
 		return ResponseEntity.ok(albumService.insert(album, file));
 	}
 	

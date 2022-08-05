@@ -3,8 +3,10 @@ package br.org.serratec.mm.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -21,8 +23,8 @@ public class Capa {
 	@Column(name="alb_cd_id")
 	private Long id;
 	
-	@OneToOne
 	@MapsId
+	@OneToOne(mappedBy="capa", fetch = FetchType.LAZY)
 	@JoinColumn(name="alb_cd_id")
 	private Album album;
 	

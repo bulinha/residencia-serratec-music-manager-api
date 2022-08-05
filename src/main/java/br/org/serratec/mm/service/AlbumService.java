@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.org.serratec.mm.dto.AlbumDTO;
 import br.org.serratec.mm.dto.AlbumListDTO;
+import br.org.serratec.mm.dto.ArtistaDTO;
 import br.org.serratec.mm.dto.LyricsDTO;
 import br.org.serratec.mm.dto.MusicaLetraDTO;
 import br.org.serratec.mm.exception.DataNotFoundException;
@@ -26,15 +27,23 @@ import br.org.serratec.mm.model.Artista;
 import br.org.serratec.mm.model.Capa;
 import br.org.serratec.mm.model.Musica;
 import br.org.serratec.mm.repository.AlbumRepository;
+import br.org.serratec.mm.repository.CapaRepository;
 import br.org.serratec.mm.util.MMUtil;
 
 @Service
 public class AlbumService {
 	@Autowired
 	private AlbumRepository albumRepository;
+	
+	@Autowired
+	private CapaRepository capaRepository;
 	@Autowired 
 	private MMUtil mmUtil;
-	@Autowired MusicaService musicaService;
+	@Autowired 
+	private MusicaService musicaService;
+	
+	@Autowired
+	private ArtistaService artistaService;
 	
 	
 	
@@ -46,26 +55,32 @@ public class AlbumService {
 
 
 	@Transactional
-	public AlbumDTO insert(@Valid AlbumDTO albumDTO) {
+	public AlbumDTO insert(@Valid AlbumDTO albumDTO) throws DataNotFoundException {
 		return insert(albumDTO, null);
 	}
 	@Transactional
-	public AlbumDTO insert(@Valid AlbumDTO albumDTO, MultipartFile file) {
+	public AlbumDTO insert(@Valid AlbumDTO albumDTO, MultipartFile file) throws DataNotFoundException {
 		Album album = new Album();
-		album.setArtista(new Artista());
+		
+		
+		album.setArtista(new Artista(artistaService.findById(albumDTO.getIdArtista())));
 		album.getArtista().setId(albumDTO.getIdArtista());
 		album.setTitulo(albumDTO.getTitulo());
-		album.setMusicas(albumDTO.getMusicas().stream().map(m -> {
-			if (m.getId()==null) {
-				return new Musica(musicaService.insert(m));
-			} else {
-				try {
-					return new Musica(musicaService.update(m.getId(), m));
-				} catch (DataNotFoundException e) {
+		
+		if (albumDTO.getMusicas()!=null) {
+		
+			album.setMusicas(albumDTO.getMusicas().stream().map(m -> {
+				if (m.getId()==null) {
 					return new Musica(musicaService.insert(m));
+				} else {
+					try {
+						return new Musica(musicaService.update(m.getId(), m));
+					} catch (DataNotFoundException e) {
+						return new Musica(musicaService.insert(m));
+					}
 				}
-			}
-		}).collect(Collectors.toList()));
+			}).collect(Collectors.toList()));
+		}
 		album.setDataCadastro(LocalDateTime.now());
 		album.setDataAlteracao(LocalDateTime.now());
 		album.setUsuario(mmUtil.getUsuarioLogado());
@@ -76,7 +91,15 @@ public class AlbumService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		album.setCapa(capa);
+		capa.setDataCadastro(LocalDateTime.now());
+		capa.setDataAlteracao(LocalDateTime.now());
+		capa.setUsuario(mmUtil.getUsuarioLogado());
+
+		album = albumRepository.save(album);
+
+		capa.setAlbum(album);
+		capaRepository.save(capa);
+		
 		
 		return new AlbumDTO(albumRepository.save(album));
 	}

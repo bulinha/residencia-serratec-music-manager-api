@@ -13,6 +13,7 @@ public class AlbumDTO {
 	private Long idArtista;
 	private String nomeArtista;
 	private List<MusicaAlbumDTO> musicas;
+	
 	public AlbumDTO() {
 		super();
 	}
@@ -21,7 +22,8 @@ public class AlbumDTO {
 		this.titulo = album.getTitulo();
 		this.idArtista = album.getArtista().getId();
 		this.nomeArtista = album.getArtista().getNome();
-		this.musicas = album.getMusicas().stream().map(m -> new MusicaAlbumDTO(m, this.idArtista, this.nomeArtista)).collect(Collectors.toList());
+		if (album.getMusicas()!=null)
+			this.musicas = album.getMusicas().stream().map(m -> new MusicaAlbumDTO(m, this.idArtista, this.nomeArtista)).collect(Collectors.toList());
 	}
 	public Long getId() {
 		return id;
@@ -68,6 +70,4 @@ public class AlbumDTO {
 		AlbumDTO other = (AlbumDTO) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 }

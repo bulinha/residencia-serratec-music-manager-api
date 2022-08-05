@@ -61,7 +61,7 @@ public class MusicaService {
 		musicaDB.setUsuario(mmUtil.getUsuarioLogado());
 		musicaDB.setDataAlteracao(LocalDateTime.now());
 		
-		return musicaRepository.save(musica);
+		return musicaRepository.save(musicaDB);
 	}
 	
 	@Transactional

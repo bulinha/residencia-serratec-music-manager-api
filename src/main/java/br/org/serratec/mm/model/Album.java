@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class Album {
 	@JoinColumn(name = "art_cd_id")
 	private Artista artista;
 
-	@OneToOne(mappedBy = "album", cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY )
 	@PrimaryKeyJoinColumn
 	private Capa capa;
 	

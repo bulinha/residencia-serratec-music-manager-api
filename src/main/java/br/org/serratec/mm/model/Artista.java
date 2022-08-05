@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import br.org.serratec.mm.dto.ArtistaDTO;
 import br.org.serratec.mm.enums.TipoArtista;
 
 @Entity
@@ -42,6 +43,17 @@ public class Artista {
 	
 	@Column(name = "art_dt_altercao", columnDefinition = "TIMESTAMP")
 	private LocalDateTime dataAlteracao;
+	
+	
+	public Artista() {
+		super();
+	}
+	public Artista(ArtistaDTO artistaDTO) {
+		super();
+		this.id=artistaDTO.getId();
+		this.nome=artistaDTO.getNome();
+		this.tipo=artistaDTO.getTipo();
+	}
 	
 
 	public Usuario getUsuario() {
