@@ -35,9 +35,6 @@ public class PlayList {
 	private String nome;
 	
 
-	@OneToOne(mappedBy = "album", cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private Capa capa;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
@@ -108,14 +105,6 @@ public class PlayList {
 		this.musicas = musicas;
 	}
 
-	
-	public Capa getCapa() {
-		return capa;
-	}
-
-	public void setCapa(Capa capa) {
-		this.capa = capa;
-	}
 
 	@Override
 	public int hashCode() {
