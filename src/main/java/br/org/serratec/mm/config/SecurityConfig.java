@@ -45,9 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.headers().frameOptions().disable().and()//para o h2
 		.cors().and()
 		.csrf().disable()
-		;
-
-		http.authorizeRequests()
+		.authorizeRequests()
 			.antMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
 			.antMatchers(HttpMethod.GET, paths).permitAll()
 			.antMatchers(HttpMethod.POST, paths).hasAuthority("ROLE_ADMIN")
