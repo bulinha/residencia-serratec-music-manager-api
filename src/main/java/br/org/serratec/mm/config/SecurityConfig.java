@@ -1,7 +1,5 @@
 package br.org.serratec.mm.config;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,16 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import br.org.serratec.mm.security.JwtAuthenticationFilter;
 import br.org.serratec.mm.security.JwtAuthorizationFilter;
 import br.org.serratec.mm.security.JwtUtil;
 import br.org.serratec.mm.security.UsuarioDetalheService;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 /***
  * Configuração de segurança da aplicação
  * Na versão mais atual do spring security a Classe WebSecurityConfigureAdapter ficou deprecated
@@ -88,20 +83,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(usuarioDetalheService).passwordEncoder(passwordEncoder());
 	}
 	
-	@Bean
-	public CorsConfigurationSource corsConfiguratinSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-		configuration.setAllowedHeaders(Arrays.asList("*"));
-		configuration.setAllowCredentials(true);
-		configuration.addExposedHeader("Authorization");
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		
-		return source;
-	}
-
+//	@Bean
+//	public CorsConfigurationSource corsConfiguratinSource() {
+//		CorsConfiguration configuration = new CorsConfiguration();
+//		//configuration.setAllowedOrigins(Arrays.asList("*"));
+//		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+//		//configuration.setAllowedHeaders(Arrays.asList("*"));
+//		//configuration.setAllowCredentials(true);
+//		//configuration.addExposedHeader("Authorization");
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//		source.registerCorsConfiguration("/**", configuration);
+//		
+//		return source;
+//	}
+	
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
