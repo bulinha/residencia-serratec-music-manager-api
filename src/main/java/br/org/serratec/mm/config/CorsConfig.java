@@ -13,8 +13,8 @@ public class CorsConfig implements WebMvcConfigurer {
 		.addMapping("/**")
 		.allowedOrigins("*")
 		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH")
-		.allowedHeaders("Origin","Content-Type", "X-Auth-Token") 
-		.exposedHeaders("*");
+		.allowedHeaders("Origin","Content-Type", "X-Auth-Token", "x-auth-token") 
+		.exposedHeaders("Authorization");
 	}
 
 }
