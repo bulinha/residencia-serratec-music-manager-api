@@ -28,6 +28,7 @@ import br.org.serratec.mm.model.Capa;
 import br.org.serratec.mm.model.Musica;
 import br.org.serratec.mm.repository.AlbumRepository;
 import br.org.serratec.mm.repository.CapaRepository;
+import br.org.serratec.mm.repository.MusicaRepository;
 import br.org.serratec.mm.util.MMUtil;
 
 @Service
@@ -41,6 +42,9 @@ public class AlbumService {
 	private MMUtil mmUtil;
 	@Autowired 
 	private MusicaService musicaService;
+	
+	@Autowired
+	private MusicaRepository musicaRepository;
 	
 	@Autowired
 	private ArtistaService artistaService;
@@ -120,11 +124,9 @@ public class AlbumService {
 			if (m.getId()==null) {
 				return new Musica(musicaService.insert(m));
 			} else {
-				try {
-					return new Musica(musicaService.update(m.getId(), m));
-				} catch (DataNotFoundException e) {
-					return new Musica(musicaService.insert(m));
-				}
+				Musica mNova =  musicaRepository.findById(m.getId()).orElseThrow();
+				mNova.setId(m.getId());
+				return mNova;
 			}
 		}).collect(Collectors.toList()));
 		albumDB.setDataAlteracao(LocalDateTime.now());
@@ -167,7 +169,7 @@ public class AlbumService {
 		}
 		LyricsDTO lyrics=response.getBody();
 
-		return new MusicaLetraDTO(opMusica.get(), lyrics.getLyrics().replaceAll("\r\n", "<br>").replaceAll("\n", "<br>"));
+		return new MusicaLetraDTO(opMusica.get(), lyrics.getLyrics());
 		
 	}
 
