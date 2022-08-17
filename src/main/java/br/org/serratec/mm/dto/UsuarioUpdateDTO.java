@@ -4,8 +4,6 @@ import javax.validation.constraints.NotNull;
 
 public class UsuarioUpdateDTO {
 	@NotNull
-	private Long id;
-	@NotNull
 	private String nome;
 	@NotNull
 	private String email;
@@ -14,12 +12,6 @@ public class UsuarioUpdateDTO {
 	private String senha;
 	private String confirmaSenha;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getNome() {
 		return nome;
 	}
