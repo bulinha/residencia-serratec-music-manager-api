@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.org.serratec.mm.dto.AlbumDTO;
 import br.org.serratec.mm.dto.AlbumListDTO;
-import br.org.serratec.mm.dto.ArtistaDTO;
 import br.org.serratec.mm.dto.LyricsDTO;
 import br.org.serratec.mm.dto.MusicaLetraDTO;
 import br.org.serratec.mm.exception.DataNotFoundException;
@@ -162,7 +161,9 @@ public class AlbumService {
 		}
 		String musica = opMusica.get().getTitulo().replaceAll("'", "");
 		RestTemplate restTemplate = new RestTemplate();
-		String url = String.format("https://api.lyrics.ovh/v1/%s/%s", MMUtil.encode(artista), MMUtil.encode(musica));
+		//https://lyrist.vercel.app/api/legiao+urbana/eduardo+e+monica
+		//String url = String.format("https://api.lyrics.ovh/v1/%s/%s", MMUtil.encode(artista), MMUtil.encode(musica));
+		String url = String.format("https://lyrist.vercel.app/api/%s/%s", MMUtil.encode(artista), MMUtil.encode(musica));
 		ResponseEntity<LyricsDTO> response = restTemplate.getForEntity(url, LyricsDTO.class);
 		if (response.getStatusCode()!=HttpStatus.OK) {
 			throw new DataNotFoundException("Letra não encontrada!");

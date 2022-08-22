@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import br.org.serratec.mm.dto.ArtistaDTO;
@@ -27,6 +29,8 @@ public class Artista {
 	private Long id;
 	
 	@Size(min = 5, max = 100)
+	@Min(0)
+	@Max(10)
 	@Column(name = "art_tx_nome", nullable = false, length = 100)
 	private String nome;
 	
