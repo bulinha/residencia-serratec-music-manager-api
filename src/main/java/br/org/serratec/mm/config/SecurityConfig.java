@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.cors().and()
 		.csrf().disable()
 		.authorizeRequests()
+			.antMatchers("/json/*").permitAll()
 			.antMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
 			.antMatchers(HttpMethod.GET, paths).permitAll()
 			.antMatchers(HttpMethod.POST, paths).hasAuthority("ROLE_ADMIN")
